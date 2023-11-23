@@ -23,6 +23,15 @@ public class VertxGreeterGrpcServer  {
         .onSuccess(msg -> response.complete(msg))
         .onFailure(error -> response.fail(error));
     }
+    default ReadStream<helloworld.Helloworld.HelloReply> sayRepeatHello(helloworld.Helloworld.RepeatHelloRequest request) {
+      throw new UnsupportedOperationException("Not implemented");
+    }
+    default void sayRepeatHello(helloworld.Helloworld.RepeatHelloRequest request, WriteStream<helloworld.Helloworld.HelloReply> response) {
+      sayRepeatHello(request)
+        .handler(msg -> response.write(msg))
+        .endHandler(msg -> response.end())
+        .resume();
+    }
 
     default GreeterApi bind_sayHello(GrpcServer server) {
       server.callHandler(GreeterGrpc.getSayHelloMethod(), request -> {
@@ -40,9 +49,22 @@ public class VertxGreeterGrpcServer  {
       });
       return this;
     }
+    default GreeterApi bind_sayRepeatHello(GrpcServer server) {
+      server.callHandler(GreeterGrpc.getSayRepeatHelloMethod(), request -> {
+        request.handler(req -> {
+          try {
+            sayRepeatHello(req, request.response());
+          } catch (RuntimeException err) {
+            request.response().status(GrpcStatus.INTERNAL).end();
+          }
+        });
+      });
+      return this;
+    }
 
     default GreeterApi bindAll(GrpcServer server) {
       bind_sayHello(server);
+      bind_sayRepeatHello(server);
       return this;
     }
   }

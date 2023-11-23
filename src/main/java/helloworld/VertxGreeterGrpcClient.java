@@ -24,4 +24,17 @@ public class VertxGreeterGrpcClient {
     });
   }
 
+  public Future<ReadStream<helloworld.Helloworld.HelloReply>> sayRepeatHello(helloworld.Helloworld.RepeatHelloRequest request) {
+    return client.request(socketAddress, GreeterGrpc.getSayRepeatHelloMethod()).compose(req -> {
+      req.end(request);
+      return req.response().flatMap(resp -> {
+        if (resp.status() != null && resp.status() != GrpcStatus.OK) {
+          return Future.failedFuture("Invalid gRPC status " + resp.status());
+        } else {
+          return Future.succeededFuture(resp);
+        }
+      });
+    });
+  }
+
 }
