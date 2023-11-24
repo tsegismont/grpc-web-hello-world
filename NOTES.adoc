@@ -1,0 +1,29 @@
+= Notes
+
+== Vert.x gRPC Protoc
+
+=== Config
+
+Vert.x plugin unable to generate for server only (or client only).
+
+=== gRPC Web plugin
+
+How to help Java developers with gRPC web client generation?
+
+== Vert.x gRPC Web
+
+=== CORS
+
+CORS needs to be dealt with.
+
+=== Protocol
+
+Decoding large payloads
+
+Some differences to explore: status, key/value pairs.
+
+=== Testing
+
+Need a client framework for test.
+Jest with headless browser maybe.
+
