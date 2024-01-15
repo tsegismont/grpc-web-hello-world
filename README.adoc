@@ -20,7 +20,6 @@ docker run -v "$(pwd)"/envoy.yaml:/etc/envoy/envoy.yaml:ro -ti --network=host en
 [source,bash]
 ----
 cd src/main/web
-protoc -I=../proto helloworld.proto --js_out=import_style=commonjs:src --grpc-web_out=import_style=commonjs,mode=grpcwebtext:src
 npx webpack
 python3 -m http.server 8081
 ----

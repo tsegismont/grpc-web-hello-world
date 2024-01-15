@@ -50,8 +50,9 @@
   <build>
     <plugins>
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.11.0</version>
+        <version>3.12.1</version>
         <configuration>
           <release>${maven.compiler.target}</release>
         </configuration>
@@ -64,27 +65,50 @@
         <version>0.6.1</version>
         <configuration>
           <protocArtifact>com.google.protobuf:protoc:${protoc.version}:exe:${os.detected.classifier}</protocArtifact>
-          <pluginId>grpc-java</pluginId>
-          <pluginArtifact>io.grpc:protoc-gen-grpc-java:${grpc.version}:exe:${os.detected.classifier}</pluginArtifact>
-          <protocPlugins>
-            <protocPlugin>
-              <id>vertx-grpc-protoc-plugin2</id>
-              <groupId>io.vertx</groupId>
-              <artifactId>vertx-grpc-protoc-plugin2</artifactId>
-              <version>${vertx.version}</version>
-              <mainClass>io.vertx.grpc.plugin.VertxGrpcGenerator</mainClass>
-            </protocPlugin>
-          </protocPlugins>
         </configuration>
         <executions>
           <execution>
-            <id>compile</id>
+            <id>compile-java</id>
             <configuration>
+              <pluginId>grpc-java</pluginId>
+              <pluginArtifact>io.grpc:protoc-gen-grpc-java:${grpc.version}:exe:${os.detected.classifier}</pluginArtifact>
+              <protocPlugins>
+                <protocPlugin>
+                  <id>vertx-grpc-protoc-plugin2</id>
+                  <groupId>io.vertx</groupId>
+                  <artifactId>vertx-grpc-protoc-plugin2</artifactId>
+                  <version>${vertx.version}</version>
+                  <mainClass>io.vertx.grpc.plugin.VertxGrpcGenerator</mainClass>
+                </protocPlugin>
+              </protocPlugins>
               <outputDirectory>${project.basedir}/src/main/java</outputDirectory>
               <clearOutputDirectory>false</clearOutputDirectory>
             </configuration>
             <goals>
               <goal>compile</goal>
+              <goal>compile-custom</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>compile-js</id>
+            <configuration>
+              <javaScriptOptions>import_style=commonjs</javaScriptOptions>
+              <outputDirectory>${project.basedir}/src/main/web/src</outputDirectory>
+              <clearOutputDirectory>false</clearOutputDirectory>
+            </configuration>
+            <goals>
+              <goal>compile-js</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>compile-grpc-web</id>
+            <configuration>
+              <pluginId>grpc-web</pluginId>
+              <pluginParameter>import_style=commonjs,mode=grpcwebtext</pluginParameter>
+              <outputDirectory>${project.basedir}/src/main/web/src</outputDirectory>
+              <clearOutputDirectory>false</clearOutputDirectory>
+            </configuration>
+            <goals>
               <goal>compile-custom</goal>
             </goals>
           </execution>
