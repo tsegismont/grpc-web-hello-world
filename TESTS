@@ -1,0 +1,17 @@
+Unary RPC (all formats)
+ - empty payload
+ - small payload
+ - large payload
+
+Server-side Streaming RPC (text-only)
+
+Custom metadata
+
+Unimplemented method
+
+Compression: https://github.com/grpc/grpc-web/blob/master/doc/browser-features.md#compression
+
+Tests for https://github.com/grpc/grpc/blob/master/doc/PROTOCOL-WEB.md#protocol-differences-vs-grpc-over-http2
+
+
+curl 'http://0.0.0.0:8080/io.vertx.grpcweb.TestService/EmptyCall' -X POST -H 'User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:122.0) Gecko/20100101 Firefox/122.0' -H 'Accept: application/grpc-web-text' -H 'Accept-Language: en-US,en;q=0.5' -H 'Accept-Encoding: gzip, deflate' -H 'Content-Type: application/grpc-web-text' -H 'X-User-Agent: grpc-web-javascript/0.1' -H 'X-Grpc-Web: 1' -H 'Origin: http://0.0.0.0:8081' -H 'Connection: keep-alive' -H 'Referer: http://0.0.0.0:8081/' -H 'DNT: 1' -H 'Sec-GPC: 1' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' --data-raw 'AAAAAAA='

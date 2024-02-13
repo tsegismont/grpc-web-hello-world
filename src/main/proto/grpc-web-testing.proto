@@ -14,24 +14,32 @@
 
 syntax = "proto3";
 
-package helloworld;
+package io.vertx.grpcweb;
 
-service Greeter {
-  // unary call
-  rpc SayHello(HelloRequest) returns (HelloReply);
-  // server streaming call
-  rpc SayRepeatHello(RepeatHelloRequest) returns (stream HelloReply);
+service TestService {
+  rpc EmptyCall(Empty) returns (Empty);
+  rpc UnaryCall(EchoRequest) returns (EchoResponse);
+  rpc StreamingCall(StreamingRequest) returns (stream StreamingResponse);
 }
 
-message HelloRequest {
-  string name = 1;
+service UnimplementedService {
+  rpc UnimplementedCall(Empty) returns (Empty); // Do not implement
 }
 
-message RepeatHelloRequest {
-  string name = 1;
-  int32 count = 2;
+message Empty {}
+
+message EchoRequest {
+  string payload = 1;
 }
 
-message HelloReply {
-  string message = 1;
+message EchoResponse {
+  string payload = 1;
+}
+
+message StreamingRequest {
+  repeated int32 response_size = 1;
+}
+
+message StreamingResponse {
+  string payload = 1;
 }

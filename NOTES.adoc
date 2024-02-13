@@ -15,6 +15,7 @@ How to help Java developers with gRPC web client generation?
 === CORS
 
 CORS needs to be dealt with.
+https://github.com/grpc/grpc-web/blob/master/doc/browser-features.md#cors-support
 
 === Protocol
 
@@ -25,5 +26,5 @@ Some differences to explore: status, key/value pairs.
 === Testing
 
 Need a client framework for test.
-Jest with headless browser maybe.
+Jest with headless browser, maybe.
 

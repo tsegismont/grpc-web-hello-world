@@ -5,7 +5,7 @@
 [source,bash]
 ----
 mvn clean package
-java -jar target/grpc-web-hello-world-1.0-SNAPSHOT.jar
+java -agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=*:5005 -jar target/grpc-web-hello-world-1.0-SNAPSHOT.jar
 ----
 
 == Envoy proxy
