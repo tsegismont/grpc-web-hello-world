@@ -104,7 +104,7 @@
             <id>compile-grpc-web</id>
             <configuration>
               <pluginId>grpc-web</pluginId>
-              <pluginParameter>import_style=commonjs,mode=grpcwebtext</pluginParameter>
+              <pluginParameter>import_style=commonjs,mode=grpcweb</pluginParameter>
               <outputDirectory>${project.basedir}/src/main/web/src</outputDirectory>
               <clearOutputDirectory>false</clearOutputDirectory>
             </configuration>
