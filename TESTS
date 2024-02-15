@@ -10,6 +10,7 @@ Custom metadata
 Unimplemented method
 
 Compression: https://github.com/grpc/grpc-web/blob/master/doc/browser-features.md#compression
+=> Does not work with HttpServerOptions, needs investigation
 
 Tests for https://github.com/grpc/grpc/blob/master/doc/PROTOCOL-WEB.md#protocol-differences-vs-grpc-over-http2
 
