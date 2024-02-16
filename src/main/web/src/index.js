@@ -4,13 +4,26 @@ const {TestServiceClient, UnimplementedServiceClient} = require('./grpc-web-test
 const testServiceClient = new TestServiceClient('http://' + window.location.hostname + ':8080', null, null);
 const unimplementedServiceClient = new UnimplementedServiceClient('http://' + window.location.hostname + ':8080', null, null);
 
-const ECHO_INITIAL_KEY = 'x-grpc-test-echo-initial';
-const ECHO_INITIAL_VALUE = 'test_initial_metadata_value';
-const ECHO_TRAILING_KEY = 'x-grpc-test-echo-trailing-bin';
-const ECHO_TRAILING_VALUE = 0xababab;
+const HEADER_TEXT_KEY = 'x-header-text-key';
+const HEADER_TEXT_VALUE = 'header_text_value';
+
+const HEADER_BIN_KEY = 'x-header-bin-key-bin';
+const HEADER_BIN_VALUE = 0xabcdef;
+
+
+const TRAILER_TEXT_KEY = 'x-trailer-text-key';
+const TRAILER_TEXT_VALUE = 'trailer_text_value';
+
+const TRAILER_BIN_KEY = 'x-trailer-bin-key-bin';
+const TRAILER_BIN_VALUE = 0xfedcba;
+
+const TRAILER_ERROR_KEY = "x-error-trailer"
+
 const someMetadata = {
-  [ECHO_INITIAL_KEY]: ECHO_INITIAL_VALUE,
-  [ECHO_TRAILING_KEY]: ECHO_TRAILING_VALUE
+  [HEADER_TEXT_KEY]: HEADER_TEXT_VALUE,
+  [HEADER_BIN_KEY]: HEADER_BIN_VALUE,
+  [TRAILER_TEXT_KEY]: TRAILER_TEXT_VALUE,
+  [TRAILER_BIN_KEY]: TRAILER_BIN_VALUE,
 };
 
 // Empty Payload
@@ -23,7 +36,7 @@ testServiceClient.emptyCall(empty, {}, (err, response) => {
   }
 });
 
-// Empty Payload with Metdata
+// Empty Payload with metadata
 testServiceClient.emptyCall(empty, someMetadata, (err, response) => {
   if (err) {
     console.log(`Unexpected error for emptyCall: code = ${err.code}` + `, message = "${err.message}"`);
@@ -32,10 +45,10 @@ testServiceClient.emptyCall(empty, someMetadata, (err, response) => {
   }
 })
   .on('metadata', (metadata) => {
-    console.log(`Got metadata: ${metadata[ECHO_INITIAL_KEY]}`)
+    console.log(`Got metadata: ${metadata[HEADER_TEXT_KEY]}`)
   })
   .on('status', (status) => {
-    console.log(`Got status: ${status.metadata[ECHO_TRAILING_KEY]}`)
+    console.log(`Got status: ${status.metadata[TRAILER_BIN_KEY]}`)
   });
 
 // Small payload
@@ -82,10 +95,10 @@ testServiceClient.streamingCall(streamRequest, someMetadata)
   })
 
   .on('metadata', (metadata) => {
-    console.log(`Got metadata: ${metadata[ECHO_INITIAL_KEY]}`)
+    console.log(`Got metadata: ${metadata[HEADER_TEXT_KEY]}`)
   })
   .on('status', (status) => {
-    console.log(`Got status: ${status.metadata[ECHO_TRAILING_KEY]}`)
+    console.log(`Got status: ${status.metadata[TRAILER_BIN_KEY]}`)
   });
 
 // Custom metadata
@@ -99,10 +112,27 @@ testServiceClient.unaryCall(someEchoRequest, someMetadata, (err, response) => {
   }
 })
   .on('metadata', (metadata) => {
-    console.log(`Got metadata: ${metadata[ECHO_INITIAL_KEY]}`)
+    console.log(`Got metadata: ${metadata[HEADER_TEXT_KEY]}`)
   })
   .on('status', (status) => {
-    console.log(`Got status: ${status.metadata[ECHO_TRAILING_KEY]}`)
+    console.log(`Got status: ${status.metadata[TRAILER_BIN_KEY]}`)
+  });
+
+// Trailers-only
+const boomRequest = new EchoRequest();
+boomRequest.setPayload("boom");
+testServiceClient.unaryCall(boomRequest, someMetadata, (err, response) => {
+  if (err) {
+    console.log(`Expected error for unaryCall: code = ${err.code}` + `, message = "${err.message}"`);
+  } else {
+    console.log(response.getPayload() === boomRequest.getPayload());
+  }
+})
+  .on('metadata', (metadata) => {
+    console.log(`Got metadata: ${metadata[HEADER_TEXT_KEY]}`)
+  })
+  .on('status', (status) => {
+    console.log(`Got status: ${status.code}`)
   });
 
 // Unimplemented method
