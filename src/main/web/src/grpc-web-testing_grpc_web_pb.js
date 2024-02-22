@@ -35,7 +35,7 @@ proto.io.vertx.grpcweb = require('./grpc-web-testing_pb.js');
 proto.io.vertx.grpcweb.TestServiceClient =
     function(hostname, credentials, options) {
   if (!options) options = {};
-      options.format = 'text';
+      options.format = 'binary';
 
   /**
    * @private @const {!grpc.web.GrpcWebClientBase} The client
@@ -61,7 +61,7 @@ proto.io.vertx.grpcweb.TestServiceClient =
 proto.io.vertx.grpcweb.TestServicePromiseClient =
     function(hostname, credentials, options) {
   if (!options) options = {};
-      options.format = 'text';
+      options.format = 'binary';
 
   /**
    * @private @const {!grpc.web.GrpcWebClientBase} The client
@@ -265,7 +265,7 @@ proto.io.vertx.grpcweb.TestServicePromiseClient.prototype.streamingCall =
 proto.io.vertx.grpcweb.UnimplementedServiceClient =
     function(hostname, credentials, options) {
   if (!options) options = {};
-      options.format = 'text';
+      options.format = 'binary';
 
   /**
    * @private @const {!grpc.web.GrpcWebClientBase} The client
@@ -291,7 +291,7 @@ proto.io.vertx.grpcweb.UnimplementedServiceClient =
 proto.io.vertx.grpcweb.UnimplementedServicePromiseClient =
     function(hostname, credentials, options) {
   if (!options) options = {};
-      options.format = 'text';
+      options.format = 'binary';
 
   /**
    * @private @const {!grpc.web.GrpcWebClientBase} The client
