@@ -15,7 +15,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <protoc.version>3.21.12</protoc.version>
     <grpc.version>1.50.2</grpc.version>
-    <vertx.version>4.5.0</vertx.version>
+    <vertx.version>5.0.0-SNAPSHOT</vertx.version>
     <vertx-maven-plugin.version>1.0.28</vertx-maven-plugin.version>
     <vertx.verticle>io.vertx.grpcweb.GrpcWebTestingVerticle</vertx.verticle>
   </properties>
@@ -35,6 +35,10 @@
   <dependencies>
     <dependency>
       <groupId>io.vertx</groupId>
+      <artifactId>vertx-web</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.vertx</groupId>
       <artifactId>vertx-grpc-server</artifactId>
     </dependency>
     <dependency>
@@ -44,6 +48,10 @@
     <dependency>
       <groupId>io.vertx</groupId>
       <artifactId>vertx-rx-java3</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.vertx</groupId>
+      <artifactId>vertx-launcher-legacy-cli</artifactId>
     </dependency>
   </dependencies>
 
